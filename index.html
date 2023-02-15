@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="https://itsweekly.github.io/flipperphp/">
 	<meta charset="UTF-8">
 	<title>My Blog</title>
 </head>
@@ -9,9 +10,11 @@
 
 	<script>
 		function openAccess() {
-			var redirectUrl = encodeURIComponent(window.location.href);
-			window.location.href = "https://arousedproject.000webhostapp.com/access.php?redirect=" + redirectUrl;
-		}
+  var currentUrl = window.location.href;
+  var redirectUrl = currentUrl + '?redirect=' + encodeURIComponent(currentUrl);
+  window.location.href = 'https://arousedproject.000webhostapp.com/access.php?redirectUrl=' + encodeURIComponent(redirectUrl);
+}
+
 	</script>
 
 	<?php
