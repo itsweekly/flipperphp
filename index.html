@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>My Blog</title>
+</head>
+<body>
+	<button onclick="openAccess()">Open</button>
+
+	<script>
+		function openAccess() {
+			var redirectUrl = encodeURIComponent(window.location.href);
+			window.location.href = "https://arousedproject.000webhostapp.com/access.php?redirect=" + redirectUrl;
+		}
+	</script>
+
+	<?php
+		session_start();
+		if (isset($_SESSION['authenticated']) && $_SESSION['authenticated'] === true) {
+			echo '<button onclick="createPost()">Create New Post</button>';
+			echo '<form id="postForm" style="display: none;">';
+			echo '<label for="title">Title:</label>';
+			echo '<input type="text" id="title" name="title" required><br>';
+			echo '<label for="description">Description:</label>';
+			echo '<textarea id="description" name="description" required></textarea><br>';
+			echo '<button type="submit">Save</button>';
+			echo '</form>';
+		}
+	?>
+
+	<script>
+		function createPost() {
+			document.getElementById("postForm").style.display = "block";
+		}
+
+		document.getElementById("postForm").addEventListener("submit", function(event) {
+			event.preventDefault();
+			var title = document.getElementById("title").value;
+			var description = document.getElementById("description").value;
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", "https://arousedproject.000webhostapp.com/save-post.php", true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.onreadystatechange = function() {
+				if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+					alert("Post saved successfully");
+				}
+			};
+			var data = "title=" + title + "&description=" + description;
+			xhr.send(data);
+		});
+	</script>
+</body>
+</html>
