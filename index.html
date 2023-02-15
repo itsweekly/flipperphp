@@ -25,6 +25,12 @@
 			echo '<textarea id="description" name="description" required></textarea><br>';
 			echo '<button type="submit">Save</button>';
 			echo '</form>';
+		} else if (isset($_SESSION['redirect_url'])) {
+			// The user was redirected from the access.php file.
+			// Restore the URL of the index.html file and display the "Open" button.
+			$redirectUrl = $_SESSION['redirect_url'];
+			unset($_SESSION['redirect_url']);
+			echo '<script>window.location.href = "' . $redirectUrl . '";</script>';
 		}
 	?>
 
